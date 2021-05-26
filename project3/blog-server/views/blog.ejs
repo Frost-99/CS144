@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><%= title %></title>
+    </head>
+    <body>
+        <% for (let i = 0; i < blogs.length; i++) { %>
+            <hr>
+            <%- blogs[i].htmlTitle %>
+            <%- blogs[i].htmlBody %>
+            <hr>
+        <% } %>
+
+    </body>
+</html>

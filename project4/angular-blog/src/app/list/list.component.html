@@ -1,0 +1,8 @@
+<button id="list-new-button" (click)="newPost.emit()">New Post</button>
+<br>
+
+
+<!-- <div *ngFor="let post of posts" id="list-post-:{{ post.postid }}" (click)="openPost.emit(post)">{{ post.title }} ({{ post.created | date:'medium' }})</div> -->
+<ul>
+    <li *ngFor="let post of posts" id="list-post-{{ post.postid }}" (click)="openPost.emit(post)">{{ post.title }} ({{ post.created | date:'medium' }})</li>
+</ul>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Login</title>
+    </head>
+    <body>
+        <form action="/login" method="POST">
+            <label for="username">Username:</label><br>
+            <input type="text" id="username" name="username" value="<%- username %>" required><br>
+            <label for="password">Password:</label><br>
+            <input type="password" id="password" name="password" value="<%- password %>" required><br><br>
+            <input type="hidden" id="redirect" name="redirect" value="<%- redirect %>">
+            <input type="submit" value="Submit">
+        </form> 
+
+        <% if (fail) { %> 
+            <p>Authentication falied, username and password don't match!</p>
+        <% } %> 
+    </body>
+</html>

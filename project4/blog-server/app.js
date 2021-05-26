@@ -1,0 +1,67 @@
+let createError = require('http-errors');
+let express = require('express');
+let path = require('path');
+let cookieParser = require('cookie-parser');
+let logger = require('morgan');
+
+// let indexRouter = require('./routes/index');
+// let usersRouter = require('./routes/users');
+let blogRouter = require('./routes/blogs');
+let client = require('./db');
+let loginRouter = require('./routes/login');
+let apiRouter = require('./routes/api');
+let editorRouter = require('./routes/editor');
+const authJWT = require('./routes/editor');
+
+let app = express();
+
+(async () => {
+    try {
+        // connect to Mongo on start
+        await client.connect('mongodb://localhost:27017/');
+
+        // view engine setup
+        app.set('views', path.join(__dirname, 'views'));
+        app.set('view engine', 'ejs');
+    
+        app.use(logger('dev'));
+        app.use(express.json());
+        app.use(express.urlencoded({ extended: false }));
+        app.use(cookieParser());
+        
+        
+        // app.use('/', indexRouter);
+        // app.use('/users', usersRouter);
+        app.use('/blog', blogRouter);
+        app.use('/login', loginRouter.router);
+        app.use('/editor', authJWT);
+        app.use(express.static(path.join(__dirname, 'public')));
+        app.use(loginRouter.verify);
+        app.use('/api/posts', apiRouter);
+    
+        // catch 404 and forward to error handler
+        app.use(function(req, res, next) {
+            next(createError(404));
+        });
+    
+        
+    } catch (err) {
+        // error handler
+        app.use(function(err, req, res, next) {
+        // set locals, only providing error in development
+        res.locals.message = err.message;
+        res.locals.error = req.app.get('env') === 'development' ? err : {};
+    
+        // render the error page
+        res.status(err.status || 500);
+        res.render('error');
+        });
+        console.log(err.message);
+    } finally {
+
+    }
+})
+();
+
+
+module.exports = app;

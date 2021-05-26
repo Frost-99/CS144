@@ -1,0 +1,7 @@
+**/*.class
+**/.*
+.*
+!/.gitignore
+# **/*.ts
+**/node_modules
+!/project4/**/.*
